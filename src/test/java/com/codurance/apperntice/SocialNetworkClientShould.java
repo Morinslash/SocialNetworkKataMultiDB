@@ -1,5 +1,7 @@
 package com.codurance.apperntice;
 
+import com.codurance.apperntice.command.Command;
+import com.codurance.apperntice.command.CommandFactory;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;

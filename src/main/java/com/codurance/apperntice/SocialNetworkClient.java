@@ -1,5 +1,8 @@
 package com.codurance.apperntice;
 
+import com.codurance.apperntice.command.Command;
+import com.codurance.apperntice.command.CommandFactory;
+
 public class SocialNetworkClient {
     private CommandFactory commandFactory;
 

@@ -1,4 +1,4 @@
-package com.codurance.apperntice;
+package com.codurance.apperntice.parser;
 
 public class Parser {
     public String[] parseInput(String userInput) {

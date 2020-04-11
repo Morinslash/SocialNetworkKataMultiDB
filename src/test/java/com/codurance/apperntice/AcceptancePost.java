@@ -1,5 +1,7 @@
 package com.codurance.apperntice;
 
+import com.codurance.apperntice.command.CommandFactory;
+import com.codurance.apperntice.parser.Parser;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -11,10 +13,12 @@ import static org.mockito.Mockito.verify;
 public class AcceptancePost {
     @Mock
     private Console console;
+    private CommandFactory commandFactory;
 
     @Test
     public void when_user_post_new_post_user_has_new_post() {
-        SocialNetworkClient socialNetworkClient = new SocialNetworkClient(new CommandFactory());
+        commandFactory = new CommandFactory(new Parser());
+        SocialNetworkClient socialNetworkClient = new SocialNetworkClient(commandFactory);
         socialNetworkClient.processUserInput("Alice -> I love the weather today");
         socialNetworkClient.processUserInput("Alice");
 

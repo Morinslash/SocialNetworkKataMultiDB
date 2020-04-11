@@ -1,4 +1,4 @@
-package com.codurance.apperntice;
+package com.codurance.apperntice.command;
 
 public interface Command {
     void execute();
