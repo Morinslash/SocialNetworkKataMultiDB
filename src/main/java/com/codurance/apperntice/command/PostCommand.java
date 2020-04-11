@@ -1,5 +1,6 @@
 package com.codurance.apperntice.command;
 
+import com.codurance.apperntice.entities.User;
 import com.codurance.apperntice.repositories.UserRepository;
 
 public class PostCommand implements Command{
@@ -13,6 +14,7 @@ public class PostCommand implements Command{
 
     @Override
     public void execute(UserRepository userRepository, long timestamp) {
-        throw new UnsupportedOperationException("Implement me!");
+        User user = userRepository.getUser(username);
+        user.addNewPost(message, timestamp);
     }
 }
