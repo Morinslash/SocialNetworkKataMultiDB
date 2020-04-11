@@ -2,9 +2,10 @@ package com.codurance.apperntice;
 
 import com.codurance.apperntice.command.CommandFactory;
 import com.codurance.apperntice.parser.Parser;
-import com.codurance.apperntice.repositories.UserRepository;
 import com.codurance.apperntice.repositories.in_memory.InMemoryUserRepository;
 import com.codurance.apperntice.service.UserService;
+import com.codurance.apperntice.utils.Clock;
+import com.codurance.apperntice.utils.Console;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -22,7 +23,7 @@ public class AcceptancePost {
     @Test
     public void when_user_post_new_post_user_has_new_post() {
         commandFactory = new CommandFactory(new Parser());
-        userService = new UserService(new InMemoryUserRepository());
+        userService = new UserService(new InMemoryUserRepository(), new Clock());
         SocialNetworkClient socialNetworkClient = new SocialNetworkClient(commandFactory, userService);
         socialNetworkClient.processUserInput("Alice -> I love the weather today");
         socialNetworkClient.processUserInput("Alice");

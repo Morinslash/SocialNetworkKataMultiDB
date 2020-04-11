@@ -12,7 +12,7 @@ public class CommandFactory {
     public Command getCommand(String userInput) {
         String[] parsedInput = parser.parseInput(userInput);
         if(parsedInput[1].equals("->")){
-            return new PostCommand();
+            return new PostCommand(parsedInput[0],parsedInput[2]);
         }
         throw new UnsupportedOperationException("Implement me!");
     }

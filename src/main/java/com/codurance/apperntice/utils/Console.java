@@ -1,4 +1,4 @@
-package com.codurance.apperntice;
+package com.codurance.apperntice.utils;
 
 public class Console {
     public void print(String output) {
