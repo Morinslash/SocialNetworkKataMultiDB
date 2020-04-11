@@ -23,6 +23,5 @@ class CommandFactoryShould {
         Command postCommand = commandFactory.getCommand(userInput);
 
         assertEquals(postCommand.getClass(), PostCommand.class);
-
     }
 }
