@@ -1,7 +1,14 @@
 package com.codurance.apperntice;
 
 public class SocialNetworkClient {
+    private CommandFactory commandFactory;
+
+    public SocialNetworkClient(CommandFactory commandFactory) {
+        this.commandFactory = commandFactory;
+    }
+
     public void processUserInput(String userInput) {
-        throw new UnsupportedOperationException("implement me!");
+        Command command = commandFactory.getCommand(userInput);
+        command.execute();
     }
 }
