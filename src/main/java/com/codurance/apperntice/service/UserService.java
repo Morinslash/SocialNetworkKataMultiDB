@@ -16,4 +16,8 @@ public class UserService {
     public void addNewPost(User user, String message) {
         postRepository.storePost(user, message, clock.now());
     }
+
+    public void printPosts(User user) {
+        throw new UnsupportedOperationException("implement me!");
+    }
 }

@@ -17,6 +17,7 @@ import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 public class AcceptancePost {
+
     @Mock private Console console;
     @Mock private Clock clock;
 

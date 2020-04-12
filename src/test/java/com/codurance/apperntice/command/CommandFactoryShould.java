@@ -12,6 +12,7 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class CommandFactoryShould {
+    public static final String USERNAME = "Alice";
     @Mock private Parser parser;
     @Mock private UserService userService;
 
@@ -25,5 +26,18 @@ class CommandFactoryShould {
         Command postCommand = commandFactory.getCommand(userInput);
 
         assertEquals(postCommand.getClass(), PostCommand.class);
+    }
+
+    @Test
+    void return_read_command_when_only_user_name_as_input() {
+        String userInput = USERNAME;
+        String[] parsedInput = {USERNAME, null, null};
+        CommandFactory commandFactory = new CommandFactory(parser, userService);
+
+        when(parser.parseInput(userInput)).thenReturn(parsedInput);
+
+        Command command = commandFactory.getCommand(userInput);
+
+        assertEquals(command.getClass(), ReadCommand.class);
     }
 }

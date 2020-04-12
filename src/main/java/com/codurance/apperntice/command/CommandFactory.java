@@ -15,8 +15,13 @@ public class CommandFactory {
 
     public Command getCommand(String userInput) {
         String[] parsedInput = parser.parseInput(userInput);
+        User user = new User(parsedInput[0]);
+
+        if(parsedInput[1] == null){
+            return new ReadCommand(user, userService);
+        }
         if(parsedInput[1].equals("->")){
-            return new PostCommand(new User(parsedInput[0]),parsedInput[2], userService);
+            return new PostCommand(user,parsedInput[2], userService);
         }
         throw new UnsupportedOperationException("Implement me!");
     }
