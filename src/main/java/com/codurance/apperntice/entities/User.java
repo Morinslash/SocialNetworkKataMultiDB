@@ -6,8 +6,4 @@ public class User {
     public User(String username) {
         this.username = username;
     }
-
-    public void addNewPost(String message, long timestamp) {
-        throw new UnsupportedOperationException("implement me!");
-    }
 }
