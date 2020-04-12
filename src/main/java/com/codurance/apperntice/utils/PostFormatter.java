@@ -8,15 +8,19 @@ public class PostFormatter {
     public String formatUserPosts(List<Post> posts, long currentTime) {
         StringBuilder formattedOutput = new StringBuilder();
         posts.forEach(post -> {
-            String timeAgo = calculate(post.timestamp, currentTime);
+            String timeAgo = formatTime(post.timestamp, currentTime);
             String formattedPost = String.format("%s (%s)", post.message, timeAgo);
             formattedOutput.append(formattedPost);
         });
         return formattedOutput.toString();
     }
 
-    private String calculate(long timestamp, long currentTime) {
+    private String formatTime(long timestamp, long currentTime) {
         long timeAgo = currentTime - timestamp;
+        return getTimeUnit(timeAgo);
+    }
+
+    private String getTimeUnit(long timeAgo) {
         if (timeAgo == 1) {
             return timeAgo + " second ago";
         }
@@ -27,6 +31,5 @@ public class PostFormatter {
             return timeAgo / 60 + " minute ago";
         }
         return timeAgo / 60 + " minutes ago";
-
     }
 }
