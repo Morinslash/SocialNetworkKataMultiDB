@@ -1,4 +1,4 @@
-package com.codurance.apperntice.parser;
+package com.codurance.apperntice.utils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

@@ -1,7 +1,8 @@
-package com.codurance.apperntice;
+package com.codurance.apperntice.clients;
 
-import com.codurance.apperntice.command.Command;
-import com.codurance.apperntice.command.CommandFactory;
+import com.codurance.apperntice.clients.SocialNetworkClient;
+import com.codurance.apperntice.commands.Command;
+import com.codurance.apperntice.commands.CommandFactory;
 import com.codurance.apperntice.service.SocialService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

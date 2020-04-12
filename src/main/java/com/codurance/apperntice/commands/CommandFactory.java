@@ -1,7 +1,7 @@
-package com.codurance.apperntice.command;
+package com.codurance.apperntice.commands;
 
 import com.codurance.apperntice.entities.User;
-import com.codurance.apperntice.parser.Parser;
+import com.codurance.apperntice.utils.Parser;
 import com.codurance.apperntice.service.UserService;
 
 public class CommandFactory {

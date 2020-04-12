@@ -1,6 +1,6 @@
-package com.codurance.apperntice.command;
+package com.codurance.apperntice.commands;
 
-import com.codurance.apperntice.parser.Parser;
+import com.codurance.apperntice.utils.Parser;
 import com.codurance.apperntice.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

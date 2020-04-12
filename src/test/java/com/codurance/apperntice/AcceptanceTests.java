@@ -1,7 +1,8 @@
 package com.codurance.apperntice;
 
-import com.codurance.apperntice.command.CommandFactory;
-import com.codurance.apperntice.parser.Parser;
+import com.codurance.apperntice.clients.SocialNetworkClient;
+import com.codurance.apperntice.commands.CommandFactory;
+import com.codurance.apperntice.utils.Parser;
 import com.codurance.apperntice.repositories.in_memory.InMemoryPostRepository;
 import com.codurance.apperntice.repositories.in_memory.InMemoryUserRepository;
 import com.codurance.apperntice.service.PrintService;
@@ -19,7 +20,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class AcceptancePost {
+public class AcceptanceTests {
 
     @Mock
     private Console console;

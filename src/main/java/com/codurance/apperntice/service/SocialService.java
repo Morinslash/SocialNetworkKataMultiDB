@@ -1,6 +1,6 @@
 package com.codurance.apperntice.service;
 
-import com.codurance.apperntice.command.Command;
+import com.codurance.apperntice.commands.Command;
 import com.codurance.apperntice.repositories.UserRepository;
 
 public class SocialService {

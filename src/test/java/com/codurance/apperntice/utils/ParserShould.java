@@ -1,5 +1,6 @@
-package com.codurance.apperntice.parser;
+package com.codurance.apperntice.utils;
 
+import com.codurance.apperntice.utils.Parser;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

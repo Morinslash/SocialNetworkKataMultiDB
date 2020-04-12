@@ -1,11 +1,8 @@
-package com.codurance.apperntice;
+package com.codurance.apperntice.clients;
 
-import com.codurance.apperntice.command.Command;
-import com.codurance.apperntice.command.CommandFactory;
-import com.codurance.apperntice.entities.Post;
+import com.codurance.apperntice.commands.Command;
+import com.codurance.apperntice.commands.CommandFactory;
 import com.codurance.apperntice.service.SocialService;
-
-import java.util.List;
 
 public class SocialNetworkClient {
     private CommandFactory commandFactory;
@@ -19,9 +16,5 @@ public class SocialNetworkClient {
     public void processUserInput(String userInput) {
         Command command = commandFactory.getCommand(userInput);
         socialService.execute(command);
-    }
-
-    public void printPosts(List<Post> posts, long now) {
-        throw new UnsupportedOperationException("implement me!");
     }
 }
