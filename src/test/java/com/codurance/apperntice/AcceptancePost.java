@@ -8,6 +8,7 @@ import com.codurance.apperntice.service.SocialService;
 import com.codurance.apperntice.service.UserService;
 import com.codurance.apperntice.utils.Clock;
 import com.codurance.apperntice.utils.Console;
+import com.codurance.apperntice.utils.PostFormatter;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -23,7 +24,7 @@ public class AcceptancePost {
 
     @Test
     public void when_user_post_new_post_user_has_new_post() {
-        UserService userService = new UserService(clock, new InMemoryPostRepository());
+        UserService userService = new UserService(clock, new InMemoryPostRepository(), new PostFormatter(), console);
         CommandFactory commandFactory = new CommandFactory(new Parser(), userService);
         SocialService socialService = new SocialService(new InMemoryUserRepository());
         SocialNetworkClient socialNetworkClient = new SocialNetworkClient(commandFactory, socialService);
