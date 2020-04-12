@@ -4,8 +4,6 @@ import com.codurance.apperntice.entities.Post;
 import com.codurance.apperntice.entities.User;
 import com.codurance.apperntice.repositories.PostRepository;
 import com.codurance.apperntice.utils.Clock;
-import com.codurance.apperntice.utils.Console;
-import com.codurance.apperntice.utils.PostFormatter;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -25,12 +23,11 @@ class UserServiceShould {
     @Mock private Clock clock;
     @Mock private PostRepository postRepository;
     @Mock private Post post;
-    @Mock private PostFormatter formatter;
-    @Mock private Console console;
+    @Mock private PrintService printService;
 
     @Test
     void store_post_for_user_in_repository() {
-        UserService userService = new UserService(clock, postRepository, formatter, console);
+        UserService userService = new UserService(clock, postRepository, printService);
 
         when(clock.now()).thenReturn(TIMESTAMP);
 
@@ -41,16 +38,13 @@ class UserServiceShould {
 
     @Test
     void print_user_posts_to_console() {
-        UserService userService = new UserService(clock, postRepository, formatter, console);
+        UserService userService = new UserService(clock, postRepository, printService);
         List<Post> posts = List.of(this.post);
-        String formatterPosts = "Hello! (1s ago)";
 
         when(clock.now()).thenReturn(TIMESTAMP);
         when(postRepository.getUserPosts(anyUser)).thenReturn(posts);
-        when(formatter.format(posts, clock.now())).thenReturn(formatterPosts);
         userService.printPosts(anyUser);
 
-        verify(formatter).format(posts, clock.now());
-        verify(console).print(formatterPosts);
+        verify(printService).printPosts(posts, clock.now());
     }
 }

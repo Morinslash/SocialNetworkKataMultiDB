@@ -4,22 +4,18 @@ import com.codurance.apperntice.entities.Post;
 import com.codurance.apperntice.entities.User;
 import com.codurance.apperntice.repositories.PostRepository;
 import com.codurance.apperntice.utils.Clock;
-import com.codurance.apperntice.utils.Console;
-import com.codurance.apperntice.utils.PostFormatter;
 
 import java.util.List;
 
 public class UserService {
     private Clock clock;
     private PostRepository postRepository;
-    private PostFormatter formatter;
-    private Console console;
+    private PrintService printService;
 
-    public UserService(Clock clock, PostRepository postRepository, PostFormatter formatter, Console console) {
+    public UserService(Clock clock, PostRepository postRepository, PrintService printService) {
         this.clock = clock;
         this.postRepository = postRepository;
-        this.formatter = formatter;
-        this.console = console;
+        this.printService = printService;
     }
 
     public void addNewPost(User user, String message) {
@@ -28,7 +24,6 @@ public class UserService {
 
     public void printPosts(User user) {
         List<Post> userPosts = postRepository.getUserPosts(user);
-        String formattedPosts = formatter.format(userPosts, clock.now());
-        console.print(formattedPosts);
+        printService.printPosts(userPosts, clock.now());
     }
 }
