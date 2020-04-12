@@ -14,6 +14,6 @@ public class UserService {
     }
 
     public void addNewPost(User user, String message) {
-        postRepository.addPost(user, message, clock.now());
+        postRepository.storePost(user, message, clock.now());
     }
 }

@@ -28,6 +28,6 @@ class UserServiceShould {
 
         userService.addNewPost(anyUser, MESSAGE);
 
-        verify(postRepository).addPost(anyUser, MESSAGE, clock.now());
+        verify(postRepository).storePost(anyUser, MESSAGE, clock.now());
     }
 }
