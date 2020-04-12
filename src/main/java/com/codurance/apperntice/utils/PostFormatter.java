@@ -23,7 +23,10 @@ public class PostFormatter {
         if (timeAgo < 60) {
             return timeAgo + " seconds ago";
         }
-        return timeAgo / 60 + " minute ago";
+        if (timeAgo < 120) {
+            return timeAgo / 60 + " minute ago";
+        }
+        return timeAgo / 60 + " minutes ago";
 
     }
 }

@@ -50,4 +50,17 @@ class PostFormatterShould {
 
         assertEquals("Hello! (1 minute ago)", formattedOutput);
     }
+
+    @Test
+    void format_user_posts_list_with_one_post_over_2_minutes_ago() {
+        PostFormatter postFormatter = new PostFormatter();
+        long postTimestamp = 1234443L;
+        Post post = new Post(anyUser, POST_MESSAGE, postTimestamp);
+
+        String formattedOutput = postFormatter.formatUserPosts(List.of(post), CURRENT_TIME);
+
+        assertEquals("Hello! (2 minutes ago)", formattedOutput);
+    }
+
+
 }
