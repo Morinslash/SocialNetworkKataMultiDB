@@ -16,12 +16,15 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class AcceptancePost {
 
-    @Mock private Console console;
-    @Mock private Clock clock;
+    @Mock
+    private Console console;
+    @Mock
+    private Clock clock;
 
     @Test
     public void when_user_post_new_post_user_has_new_post() {
@@ -30,6 +33,11 @@ public class AcceptancePost {
         CommandFactory commandFactory = new CommandFactory(new Parser(), userService);
         SocialService socialService = new SocialService(new InMemoryUserRepository());
         SocialNetworkClient socialNetworkClient = new SocialNetworkClient(commandFactory, socialService);
+
+        when(clock.now())
+                .thenReturn(1586609640L)
+                .thenReturn(1586609940L);
+
         socialNetworkClient.processUserInput("Alice -> I love the weather today");
         socialNetworkClient.processUserInput("Alice");
 
