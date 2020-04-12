@@ -17,7 +17,7 @@ public class PostCommand implements Command{
 
     @Override
     public void execute(UserRepository userRepository) {
-        User user = userRepository.getUser(username);
+        User user = userRepository.getUserByUsername(username);
         userService.addNewPost(user, message);
     }
 }
