@@ -3,18 +3,27 @@ package com.codurance.apperntice.repositories.in_memory;
 import com.codurance.apperntice.entities.User;
 import com.codurance.apperntice.repositories.UserRepository;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
 public class InMemoryUserRepository implements UserRepository {
-    private List<User> users;
+    private Set<User> users;
 
     public InMemoryUserRepository() {
-        this.users = new ArrayList<>();
+        this.users = new HashSet<>();
     }
 
     @Override
     public User getUser(User user) {
+        Optional<User> repositoryUser = users.stream()
+                .filter(u -> u.equals(user))
+                .findFirst();
+
+        if(repositoryUser.isPresent()){
+            return repositoryUser.get();
+        }
+
         users.add(user);
         return user;
     }

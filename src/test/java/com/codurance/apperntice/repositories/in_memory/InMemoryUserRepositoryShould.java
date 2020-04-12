@@ -12,8 +12,19 @@ class InMemoryUserRepositoryShould {
     @Test
     void add_user_to_repository_if_not_exists() {
         InMemoryUserRepository repository = new InMemoryUserRepository();
-        User user = repository.getUser(new User(USERNAME));
+        User anyUser = new User(USERNAME);
+        User repositoryUser = repository.getUser(anyUser);
 
-        assertEquals(USERNAME, user.username);
+        assertEquals(anyUser, repositoryUser);
+    }
+
+    @Test
+    void if_user_already_exists_return_user_from_repository() {
+        InMemoryUserRepository repository = new InMemoryUserRepository();
+        User anyUser = new User(USERNAME);
+        repository.getUser(anyUser);
+        User repositoryUser = repository.getUser(anyUser);
+
+        assertEquals(anyUser, repositoryUser);
     }
 }
