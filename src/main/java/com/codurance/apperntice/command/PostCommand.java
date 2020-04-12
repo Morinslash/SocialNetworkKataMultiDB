@@ -5,19 +5,19 @@ import com.codurance.apperntice.repositories.UserRepository;
 import com.codurance.apperntice.service.UserService;
 
 public class PostCommand implements Command{
-    private final String username;
+    private final User user;
     private final String message;
     private UserService userService;
 
-    public PostCommand(String username, String message, UserService userService) {
-        this.username = username;
+    public PostCommand(User user, String message, UserService userService) {
+        this.user = user;
         this.message = message;
         this.userService = userService;
     }
 
     @Override
     public void execute(UserRepository userRepository) {
-        User user = userRepository.getUserByUsername(username);
+        User user = userRepository.getUserByUsername(this.user);
         userService.addNewPost(user, message);
     }
 }
