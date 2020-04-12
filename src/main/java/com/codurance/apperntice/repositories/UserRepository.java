@@ -3,5 +3,5 @@ package com.codurance.apperntice.repositories;
 import com.codurance.apperntice.entities.User;
 
 public interface UserRepository {
-    User getUserByUsername(User username);
+    User getUser(User username);
 }

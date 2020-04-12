@@ -28,11 +28,11 @@ class PostCommandShould {
     void if_new_user_create_user_and_store_post() {
         PostCommand postCommand = new PostCommand(anyUser, MESSAGE, userService);
 
-        when(userRepository.getUserByUsername(anyUser)).thenReturn(anyUser);
+        when(userRepository.getUser(anyUser)).thenReturn(anyUser);
 
         postCommand.execute(userRepository);
 
-        verify(userRepository).getUserByUsername(anyUser);
+        verify(userRepository).getUser(anyUser);
         verify(userService).addNewPost(anyUser, MESSAGE);
     }
 }
