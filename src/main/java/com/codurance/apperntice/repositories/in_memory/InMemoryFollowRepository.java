@@ -3,16 +3,26 @@ package com.codurance.apperntice.repositories.in_memory;
 import com.codurance.apperntice.entities.User;
 import com.codurance.apperntice.repositories.FollowRepository;
 
-import java.util.List;
+import java.util.*;
 
 public class InMemoryFollowRepository implements FollowRepository {
-    @Override
-    public void newFollow(User anyUser, User userToFollow) {
-        throw new UnsupportedOperationException("Implement me");
+    private Map<User, Set<User>> usersFollows;
+
+    public InMemoryFollowRepository() {
+        usersFollows = new HashMap<>();
     }
 
     @Override
-    public List<User> getFollowed(User anyUser) {
-        throw new UnsupportedOperationException("Implement!");
+    public void newFollow(User user, User userToFollow) {
+        if (!usersFollows.containsKey(user)) {
+            usersFollows.put(user, new HashSet<>());
+        }
+        usersFollows.get(user).add(userToFollow);
+    }
+
+    @Override
+    public List<User> getFollowed(User user) {
+        ArrayList<User> usersFollows = new ArrayList<>(this.usersFollows.get(user));
+        return Collections.unmodifiableList(usersFollows);
     }
 }
