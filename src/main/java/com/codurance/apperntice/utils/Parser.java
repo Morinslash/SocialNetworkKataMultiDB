@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 
 public class Parser {
 
-    public static final String REGEX = "(\\w+)(\\s(->|follows)(\\s(.*))*)*";
+    public static final String REGEX = "(\\w+)(\\s(->|follows|wall)(\\s(.*))*)*";
     private Pattern pattern;
 
     public Parser() {

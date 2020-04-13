@@ -22,7 +22,7 @@ public class InMemoryFollowRepository implements FollowRepository {
 
     @Override
     public List<User> getFollowed(User user) {
-        ArrayList<User> usersFollows = new ArrayList<>(this.usersFollows.get(user));
-        return Collections.unmodifiableList(usersFollows);
+        ArrayList<User> usersFollowsList = new ArrayList<>(usersFollows.get(user));
+        return Collections.unmodifiableList(usersFollowsList);
     }
 }
