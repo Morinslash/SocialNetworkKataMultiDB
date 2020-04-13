@@ -11,6 +11,7 @@ import com.codurance.apperntice.service.UserService;
 import com.codurance.apperntice.utils.Clock;
 import com.codurance.apperntice.utils.Console;
 import com.codurance.apperntice.utils.PostFormatter;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -22,19 +23,34 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class AcceptanceTests {
 
-    @Mock
-    private Console console;
-    @Mock
-    private Clock clock;
+    @Mock private Console console;
+    @Mock private Clock clock;
+
+    private Parser parser;
+    private PostFormatter formatter;
+    private CommandFactory commandFactory;
+    private PrintService printService;
+    private UserService userService;
+    private SocialService socialService;
+    private InMemoryPostRepository postRepository;
+    private InMemoryUserRepository userRepository;
+    private SocialNetworkClient socialNetworkClient;
+
+    @BeforeEach
+    void setUp() {
+        parser = new Parser();
+        formatter = new PostFormatter();
+        postRepository = new InMemoryPostRepository();
+        userRepository = new InMemoryUserRepository();
+        printService = new PrintService(formatter, console);
+        userService = new UserService(clock, postRepository, printService);
+        commandFactory = new CommandFactory(parser, userService);
+        socialService = new SocialService(userRepository);
+        socialNetworkClient = new SocialNetworkClient(commandFactory, socialService);
+    }
 
     @Test
     public void when_user_post_new_post_user_has_new_post() {
-        PrintService printService = new PrintService(new PostFormatter(), console);
-        UserService userService = new UserService(clock, new InMemoryPostRepository(), printService);
-        CommandFactory commandFactory = new CommandFactory(new Parser(), userService);
-        SocialService socialService = new SocialService(new InMemoryUserRepository());
-        SocialNetworkClient socialNetworkClient = new SocialNetworkClient(commandFactory, socialService);
-
         when(clock.now())
                 .thenReturn(1586609640L)
                 .thenReturn(1586609940L);
@@ -43,5 +59,10 @@ public class AcceptanceTests {
         socialNetworkClient.processUserInput("Alice");
 
         verify(console).print("I love the weather today (5 minutes ago)");
+    }
+
+    @Test
+    void read_other_users_timelines_with_multiple_posts() {
+
     }
 }
