@@ -19,4 +19,8 @@ public class PrintService {
         String formattedOutput = formatter.formatUserPosts(posts, currentTime);
         console.print(formattedOutput);
     }
+
+    public void printWall(List<Post> usersPosts, long currentTime) {
+        throw new UnsupportedOperationException("implement me!");
+    }
 }

@@ -33,4 +33,11 @@ public class UserService {
     public void followUser(User anyUser, User userToFollow) {
         followRepository.newFollow(anyUser, userToFollow);
     }
+
+    public void printWall(User user) {
+        List<User> usersList = followRepository.getFollowed(user);
+        usersList.add(user);
+        List<Post> usersPosts = postRepository.getUsersPostsFromNewest(usersList);
+        printService.printWall(usersPosts, clock.now());
+    }
 }

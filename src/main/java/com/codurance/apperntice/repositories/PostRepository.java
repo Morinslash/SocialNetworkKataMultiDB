@@ -9,4 +9,6 @@ public interface PostRepository {
     void storePost(User anyUser, String message, long now);
 
     List<Post> getUserPosts(User anyUser);
+
+    List<Post> getUsersPostsFromNewest(List<User> users);
 }

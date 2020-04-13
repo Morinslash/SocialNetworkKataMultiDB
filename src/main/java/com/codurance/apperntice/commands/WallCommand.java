@@ -15,6 +15,7 @@ public class WallCommand implements Command{
 
     @Override
     public void execute(UserRepository userRepository) {
-        throw new UnsupportedOperationException("Implement");
+        User user = userRepository.getUser(this.user);
+        userService.printWall(user);
     }
 }

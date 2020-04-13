@@ -10,4 +10,5 @@ public class Post {
         this.message = message;
         this.timestamp = timestamp;
     }
+
 }

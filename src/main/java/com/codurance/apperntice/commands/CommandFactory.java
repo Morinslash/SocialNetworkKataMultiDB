@@ -32,6 +32,7 @@ public class CommandFactory {
         if(parsedInput[1].equals(WALL_COMMAND)){
             return new WallCommand(user, userService);
         }
+
         throw new UnsupportedOperationException("Implement me!");
     }
 }

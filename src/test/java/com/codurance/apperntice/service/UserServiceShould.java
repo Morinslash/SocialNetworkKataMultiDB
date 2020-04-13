@@ -11,6 +11,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.Mockito.verify;
@@ -47,7 +48,7 @@ class UserServiceShould {
 
     @Test
     void print_user_posts_to_console() {
-        List<Post> posts = List.of(this.post);
+        List<Post> posts = List.of(post);
 
         when(clock.now()).thenReturn(TIMESTAMP);
         when(postRepository.getUserPosts(anyUser)).thenReturn(posts);
@@ -60,5 +61,20 @@ class UserServiceShould {
     void add_new_user_to_follow_list_of_user() {
         userService.followUser(anyUser, userToFollow);
         verify(followRepository).newFollow(anyUser, userToFollow);
+    }
+
+    @Test
+    void print_user_posts_and_all_followed_users_posts() {
+        List<Post> listPosts = new ArrayList<>(List.of(post));
+        List<User> followedUsers = new ArrayList<>(List.of(userToFollow, anyUser));
+
+        when(followRepository.getFollowed(anyUser)).thenReturn(followedUsers);
+        when(clock.now()).thenReturn(TIMESTAMP);
+        when(postRepository.getUsersPostsFromNewest(followedUsers)).thenReturn(listPosts);
+
+        userService.printWall(anyUser);
+
+        verify(followRepository).getFollowed(anyUser);
+        verify(printService).printWall(listPosts, clock.now());
     }
 }

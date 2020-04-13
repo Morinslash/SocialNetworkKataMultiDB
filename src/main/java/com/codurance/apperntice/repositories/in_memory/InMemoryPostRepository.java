@@ -31,4 +31,14 @@ public class InMemoryPostRepository implements PostRepository {
         });
         return Collections.unmodifiableList(userPosts);
     }
+
+    @Override
+    public List<Post> getUsersPostsFromNewest(List<User> users) {
+        List<Post> usersPosts = new ArrayList<Post>();
+        users.forEach(user ->{
+            usersPosts.addAll(getUserPosts(user));
+        });
+        usersPosts.sort((post1, post2) -> Long.compare(post2.timestamp, post1.timestamp));
+        return usersPosts;
+    }
 }
