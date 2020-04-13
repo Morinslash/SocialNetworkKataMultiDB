@@ -2,6 +2,7 @@ package com.codurance.apperntice.commands;
 
 import com.codurance.apperntice.utils.Parser;
 import com.codurance.apperntice.service.UserService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -15,12 +16,17 @@ class CommandFactoryShould {
     public static final String USERNAME = "Alice";
     @Mock private Parser parser;
     @Mock private UserService userService;
+    private CommandFactory commandFactory;
+
+    @BeforeEach
+    void setUp() {
+        commandFactory = new CommandFactory(parser, userService);
+    }
 
     @Test
     void return_post_command_when_user_input_contain_post() {
         String userInput = "Alice -> Hello!";
         String[] parsedInput = {"Alice", "->", "Hello!"};
-        CommandFactory commandFactory = new CommandFactory(parser, userService);
 
         when(parser.parseInput(userInput)).thenReturn(parsedInput);
         Command postCommand = commandFactory.getCommand(userInput);
@@ -32,7 +38,6 @@ class CommandFactoryShould {
     void return_read_command_when_only_user_name_as_input() {
         String userInput = USERNAME;
         String[] parsedInput = {USERNAME, null, null};
-        CommandFactory commandFactory = new CommandFactory(parser, userService);
 
         when(parser.parseInput(userInput)).thenReturn(parsedInput);
 
@@ -45,7 +50,6 @@ class CommandFactoryShould {
     void return_follow_command_when_follows_input() {
         String userInput = "Charlie follows " + USERNAME;
         String[] parsedInput = {"Charlie", "follows", USERNAME};
-        CommandFactory commandFactory = new CommandFactory(parser, userService);
 
         when(parser.parseInput(userInput)).thenReturn(parsedInput);
 
@@ -53,4 +57,18 @@ class CommandFactoryShould {
 
         assertEquals(command.getClass(), FollowCommand.class);
     }
+
+    @Test
+    void return_wall_command_when_wall_input() {
+        String userInput = "Charlie wall";
+        String[] parsedInput = {"Charlie", "wall", null};
+
+        when(parser.parseInput(userInput)).thenReturn(parsedInput);
+
+        Command command = commandFactory.getCommand(userInput);
+
+        assertEquals(command.getClass(), WallCommand.class);
+    }
+
+
 }
