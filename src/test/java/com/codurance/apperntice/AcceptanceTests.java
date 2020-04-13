@@ -62,7 +62,7 @@ public class AcceptanceTests {
         socialNetworkClient.processUserInput("Alice -> I love the weather today");
         socialNetworkClient.processUserInput("Alice");
 
-        verify(console).print("I love the weather today (5 minutes ago)\n");
+        verify(console).print("I love the weather today (5 minutes ago)");
     }
 
     @Test
@@ -83,9 +83,9 @@ public class AcceptanceTests {
         socialNetworkClient.processUserInput("Alice");
         socialNetworkClient.processUserInput("Bob");
 
-        verify(console).print("I love the weather today (5 minutes ago)\n");
+        verify(console).print("I love the weather today (5 minutes ago)");
         verify(console).print("Good game though. (1 minute ago)\n" +
-                        "Damn! We lost! (2 minutes ago)\n");
+                        "Damn! We lost! (2 minutes ago)");
     }
 
     @Test

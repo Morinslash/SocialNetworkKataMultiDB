@@ -12,17 +12,33 @@ public class PostFormatter {
         StringBuilder formattedOutput = new StringBuilder();
         ArrayList<Post> mutablePosts = reversePosts(posts);
         mutablePosts.forEach(post -> {
-            formattedOutput.append(formatUserPost(currentTime, post));
+            formattedOutput.append(formatReadUserPost(currentTime, post));
         });
-        return formattedOutput.toString();
+        return formattedOutput.toString().trim();
     }
+
+    public String formatWallPosts(List<Post> usersPosts, long currentTime) {
+        StringBuilder formattedOutput = new StringBuilder();
+        usersPosts.forEach(post -> {
+            formattedOutput.append(formatUserWallPosts(currentTime, post));
+        });
+        return formattedOutput.toString().trim();
+    }
+
+    private String formatUserWallPosts(long currentTime, Post post) {
+        return String.format("%s - %s (%s)\n",
+                post.user.username,
+                post.message,
+                formatTime(post.timestamp, currentTime));
+    }
+
     private ArrayList<Post> reversePosts(List<Post> posts) {
         ArrayList<Post> mutablePosts = new ArrayList<>(posts);
         Collections.reverse(mutablePosts);
         return mutablePosts;
     }
 
-    private String formatUserPost(long currentTime, Post post) {
+    private String formatReadUserPost(long currentTime, Post post) {
         return String.format("%s (%s)\n",
                 post.message,
                 formatTime(post.timestamp, currentTime));
@@ -44,9 +60,5 @@ public class PostFormatter {
             return timeAgo / 60 + " minute ago";
         }
         return timeAgo / 60 + " minutes ago";
-    }
-
-    public String formatWallPosts(List<Post> usersPosts, long currentTime) {
-        throw new UnsupportedOperationException("implement me!");
     }
 }
