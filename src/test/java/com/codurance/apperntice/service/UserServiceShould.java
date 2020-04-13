@@ -2,8 +2,10 @@ package com.codurance.apperntice.service;
 
 import com.codurance.apperntice.entities.Post;
 import com.codurance.apperntice.entities.User;
+import com.codurance.apperntice.repositories.FollowRepository;
 import com.codurance.apperntice.repositories.PostRepository;
 import com.codurance.apperntice.utils.Clock;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -20,15 +22,22 @@ class UserServiceShould {
     public static final long TIMESTAMP = 1234567L;
 
     @Mock private User anyUser;
+    @Mock private User userToFollow;
+    @Mock private Post post;
     @Mock private Clock clock;
     @Mock private PostRepository postRepository;
-    @Mock private Post post;
     @Mock private PrintService printService;
+    @Mock private FollowRepository followRepository;
+
+    private UserService userService;
+
+    @BeforeEach
+    void setUp() {
+        userService = new UserService(clock, postRepository, printService, followRepository);
+    }
 
     @Test
     void store_post_for_user_in_repository() {
-        UserService userService = new UserService(clock, postRepository, printService);
-
         when(clock.now()).thenReturn(TIMESTAMP);
 
         userService.addNewPost(anyUser, MESSAGE);
@@ -38,7 +47,6 @@ class UserServiceShould {
 
     @Test
     void print_user_posts_to_console() {
-        UserService userService = new UserService(clock, postRepository, printService);
         List<Post> posts = List.of(this.post);
 
         when(clock.now()).thenReturn(TIMESTAMP);
@@ -46,5 +54,11 @@ class UserServiceShould {
         userService.printPosts(anyUser);
 
         verify(printService).printPosts(posts, clock.now());
+    }
+
+    @Test
+    void add_new_user_to_follow_list_of_user() {
+        userService.followUser(anyUser, userToFollow);
+        verify(followRepository).newFollow(anyUser, userToFollow);
     }
 }

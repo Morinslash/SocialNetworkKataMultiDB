@@ -29,6 +29,6 @@ class FollowCommandShould {
 
         followCommand.execute(userRepository);
 
-        verify(userService).follow(anyUser, userToFollow);
+        verify(userService).followUser(anyUser, userToFollow);
     }
 }

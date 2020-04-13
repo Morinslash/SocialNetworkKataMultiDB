@@ -2,6 +2,7 @@ package com.codurance.apperntice;
 
 import com.codurance.apperntice.clients.SocialNetworkClient;
 import com.codurance.apperntice.commands.CommandFactory;
+import com.codurance.apperntice.repositories.in_memory.InMemoryFollowRepository;
 import com.codurance.apperntice.utils.Parser;
 import com.codurance.apperntice.repositories.in_memory.InMemoryPostRepository;
 import com.codurance.apperntice.repositories.in_memory.InMemoryUserRepository;
@@ -35,12 +36,17 @@ public class AcceptanceTests {
     void setUp() {
         Parser parser = new Parser();
         PostFormatter formatter = new PostFormatter();
+
         InMemoryPostRepository postRepository = new InMemoryPostRepository();
         InMemoryUserRepository userRepository = new InMemoryUserRepository();
+        InMemoryFollowRepository followRepository = new InMemoryFollowRepository();
+
         PrintService printService = new PrintService(formatter, console);
-        UserService userService = new UserService(clock, postRepository, printService);
-        CommandFactory commandFactory = new CommandFactory(parser, userService);
+        UserService userService = new UserService(clock, postRepository, printService, followRepository);
         SocialService socialService = new SocialService(userRepository);
+
+        CommandFactory commandFactory = new CommandFactory(parser, userService);
+
         socialNetworkClient = new SocialNetworkClient(commandFactory, socialService);
     }
 

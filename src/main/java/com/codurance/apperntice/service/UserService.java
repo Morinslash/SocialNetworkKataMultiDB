@@ -2,6 +2,7 @@ package com.codurance.apperntice.service;
 
 import com.codurance.apperntice.entities.Post;
 import com.codurance.apperntice.entities.User;
+import com.codurance.apperntice.repositories.FollowRepository;
 import com.codurance.apperntice.repositories.PostRepository;
 import com.codurance.apperntice.utils.Clock;
 
@@ -11,11 +12,13 @@ public class UserService {
     private Clock clock;
     private PostRepository postRepository;
     private PrintService printService;
+    private FollowRepository followRepository;
 
-    public UserService(Clock clock, PostRepository postRepository, PrintService printService) {
+    public UserService(Clock clock, PostRepository postRepository, PrintService printService, FollowRepository followRepository) {
         this.clock = clock;
         this.postRepository = postRepository;
         this.printService = printService;
+        this.followRepository = followRepository;
     }
 
     public void addNewPost(User user, String message) {
@@ -27,7 +30,7 @@ public class UserService {
         printService.printPosts(userPosts, clock.now());
     }
 
-    public void follow(User anyUser, User userToFollow) {
-        throw new UnsupportedOperationException("implement me!");
+    public void followUser(User anyUser, User userToFollow) {
+        followRepository.newFollow(anyUser, userToFollow);
     }
 }

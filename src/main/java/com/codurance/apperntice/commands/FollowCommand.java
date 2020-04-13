@@ -19,6 +19,6 @@ public class FollowCommand implements Command{
     public void execute(UserRepository userRepository) {
         User user = userRepository.getUser(this.user);
         User userToFollow = userRepository.getUserByName(this.userToFollow);
-        userService.follow(user, userToFollow);
+        userService.followUser(user, userToFollow);
     }
 }
