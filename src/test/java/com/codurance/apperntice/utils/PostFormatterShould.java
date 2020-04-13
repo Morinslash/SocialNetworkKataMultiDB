@@ -16,7 +16,8 @@ class PostFormatterShould {
 
     public static final long CURRENT_TIME = 1234567L;
     public static final String POST_MESSAGE = "Hello!";
-    @Mock private User anyUser;
+    @Mock
+    private User anyUser;
 
     @Test
     void format_user_posts_list_with_one_post_1_second_ago() {
@@ -26,7 +27,7 @@ class PostFormatterShould {
 
         String formattedOutput = postFormatter.formatUserPosts(List.of(post), CURRENT_TIME);
 
-        assertEquals("Hello! (1 second ago)", formattedOutput);
+        assertEquals("Hello! (1 second ago)\n", formattedOutput);
     }
 
     @Test
@@ -37,7 +38,7 @@ class PostFormatterShould {
 
         String formattedOutput = postFormatter.formatUserPosts(List.of(post), CURRENT_TIME);
 
-        assertEquals("Hello! (2 seconds ago)", formattedOutput);
+        assertEquals("Hello! (2 seconds ago)\n", formattedOutput);
     }
 
     @Test
@@ -48,7 +49,7 @@ class PostFormatterShould {
 
         String formattedOutput = postFormatter.formatUserPosts(List.of(post), CURRENT_TIME);
 
-        assertEquals("Hello! (1 minute ago)", formattedOutput);
+        assertEquals("Hello! (1 minute ago)\n", formattedOutput);
     }
 
     @Test
@@ -59,8 +60,23 @@ class PostFormatterShould {
 
         String formattedOutput = postFormatter.formatUserPosts(List.of(post), CURRENT_TIME);
 
-        assertEquals("Hello! (2 minutes ago)", formattedOutput);
+        assertEquals("Hello! (2 minutes ago)\n", formattedOutput);
     }
 
+    @Test
+    void format_users_posts_lists_with_two_posts_in_desc_order() {
+        PostFormatter postFormatter = new PostFormatter();
+        long firstPostTimestamp = 1234565L;
+        long secondPostTimestamp = 1234566L;
+        List<Post> postsList = List.of(
+                new Post(anyUser, POST_MESSAGE, firstPostTimestamp),
+                new Post(anyUser, POST_MESSAGE, secondPostTimestamp));
 
+        String formattedOutput = postFormatter.formatUserPosts(postsList, CURRENT_TIME);
+
+        String expectedOutput = "Hello! (1 second ago)\n" +
+                "Hello! (2 seconds ago)\n";
+
+        assertEquals(expectedOutput, formattedOutput);
+    }
 }

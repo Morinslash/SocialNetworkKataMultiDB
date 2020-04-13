@@ -23,8 +23,10 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class AcceptanceTests {
 
-    @Mock private Console console;
-    @Mock private Clock clock;
+    @Mock
+    private Console console;
+    @Mock
+    private Clock clock;
 
     private Parser parser;
     private PostFormatter formatter;
@@ -58,11 +60,28 @@ public class AcceptanceTests {
         socialNetworkClient.processUserInput("Alice -> I love the weather today");
         socialNetworkClient.processUserInput("Alice");
 
-        verify(console).print("I love the weather today (5 minutes ago)");
+        verify(console).print("I love the weather today (5 minutes ago)\n");
     }
+
 
     @Test
     void read_other_users_timelines_with_multiple_posts() {
 
+        when(clock.now()).thenReturn(1586609640L)
+                .thenReturn(1586609820L)
+                .thenReturn(1586609880L)
+                .thenReturn(1586609940L);
+
+        socialNetworkClient.processUserInput("Alice -> I love the weather today");
+        socialNetworkClient.processUserInput("Bob -> Damn! We lost!");
+        socialNetworkClient.processUserInput("Bob -> Good game though.");
+
+        socialNetworkClient.processUserInput("Alice");
+        socialNetworkClient.processUserInput(("Bob"));
+
+        verify(console).print("I love the weather today (5 minutes ago)\n");
+        verify(console).print(
+                        "Good game though. (1 minute ago)\n" +
+                        "Damn! We lost! (2 minutes ago)\n");
     }
 }
