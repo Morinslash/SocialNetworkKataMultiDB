@@ -45,4 +45,8 @@ public class PostFormatter {
         }
         return timeAgo / 60 + " minutes ago";
     }
+
+    public String formatWallPosts(List<Post> usersPosts, long currentTime) {
+        throw new UnsupportedOperationException("implement me!");
+    }
 }

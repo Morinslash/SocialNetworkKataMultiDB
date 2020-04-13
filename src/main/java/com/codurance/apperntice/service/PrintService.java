@@ -21,6 +21,7 @@ public class PrintService {
     }
 
     public void printWall(List<Post> usersPosts, long currentTime) {
-        throw new UnsupportedOperationException("implement me!");
+        String formattedWall = formatter.formatWallPosts(usersPosts, currentTime);
+        console.print(formattedWall);
     }
 }
