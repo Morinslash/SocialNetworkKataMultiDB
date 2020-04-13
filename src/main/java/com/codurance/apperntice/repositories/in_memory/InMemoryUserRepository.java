@@ -4,6 +4,7 @@ import com.codurance.apperntice.entities.User;
 import com.codurance.apperntice.repositories.UserRepository;
 
 import java.util.HashSet;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
 
@@ -29,7 +30,13 @@ public class InMemoryUserRepository implements UserRepository {
     }
 
     @Override
-    public User getUserByName(String usernameToFollow) {
-        throw new UnsupportedOperationException("Implement me!");
+    public User getUserByName(String username) {
+        Optional<User> userToFollow = users.stream()
+                .filter(u -> u.username.equals(username))
+                .findFirst();
+        if (userToFollow.isPresent()){
+            return userToFollow.get();
+        }
+        throw new NoSuchElementException("User does not exist!");
     }
 }
