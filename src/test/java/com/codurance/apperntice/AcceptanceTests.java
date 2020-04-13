@@ -3,12 +3,12 @@ package com.codurance.apperntice;
 import com.codurance.apperntice.clients.SocialNetworkClient;
 import com.codurance.apperntice.commands.CommandFactory;
 import com.codurance.apperntice.repositories.in_memory.InMemoryFollowRepository;
-import com.codurance.apperntice.utils.Parser;
 import com.codurance.apperntice.repositories.in_memory.InMemoryPostRepository;
 import com.codurance.apperntice.repositories.in_memory.InMemoryUserRepository;
 import com.codurance.apperntice.service.PrintService;
 import com.codurance.apperntice.service.SocialService;
 import com.codurance.apperntice.service.UserService;
+import com.codurance.apperntice.utils.Parser;
 import com.codurance.apperntice.utils.Clock;
 import com.codurance.apperntice.utils.Console;
 import com.codurance.apperntice.utils.PostFormatter;
@@ -25,6 +25,7 @@ import static org.mockito.Mockito.when;
 public class AcceptanceTests {
 
     public static final long CURRENT_TIME = 1586609940L;
+
     @Mock
     private Console console;
     @Mock
@@ -87,11 +88,6 @@ public class AcceptanceTests {
                         "Damn! We lost! (2 minutes ago)\n");
     }
 
-//    > Charlie -> I'm in New York today! Anyone want to have a coffee?
-//    > Charlie follows Alice
-//    > Charlie wall
-//    Charlie - I'm in New York today! Anyone want to have a coffee? (2 seconds ago)
-//    Alice - I love the weather today (5 minutes ago)
     @Test
     void user_can_follow_other_user_and_see_followed_user_posts_on_user_wall() {
         long aliceTimestamp = CURRENT_TIME - 300;
