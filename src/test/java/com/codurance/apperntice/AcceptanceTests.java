@@ -23,39 +23,34 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class AcceptanceTests {
 
+    public static final long CURRENT_TIME = 1586609940L;
     @Mock
     private Console console;
     @Mock
     private Clock clock;
 
-    private Parser parser;
-    private PostFormatter formatter;
-    private CommandFactory commandFactory;
-    private PrintService printService;
-    private UserService userService;
-    private SocialService socialService;
-    private InMemoryPostRepository postRepository;
-    private InMemoryUserRepository userRepository;
     private SocialNetworkClient socialNetworkClient;
 
     @BeforeEach
     void setUp() {
-        parser = new Parser();
-        formatter = new PostFormatter();
-        postRepository = new InMemoryPostRepository();
-        userRepository = new InMemoryUserRepository();
-        printService = new PrintService(formatter, console);
-        userService = new UserService(clock, postRepository, printService);
-        commandFactory = new CommandFactory(parser, userService);
-        socialService = new SocialService(userRepository);
+        Parser parser = new Parser();
+        PostFormatter formatter = new PostFormatter();
+        InMemoryPostRepository postRepository = new InMemoryPostRepository();
+        InMemoryUserRepository userRepository = new InMemoryUserRepository();
+        PrintService printService = new PrintService(formatter, console);
+        UserService userService = new UserService(clock, postRepository, printService);
+        CommandFactory commandFactory = new CommandFactory(parser, userService);
+        SocialService socialService = new SocialService(userRepository);
         socialNetworkClient = new SocialNetworkClient(commandFactory, socialService);
     }
 
     @Test
     public void when_user_post_new_post_user_has_new_post() {
+        long postTimestamp = CURRENT_TIME - 300;
+
         when(clock.now())
-                .thenReturn(1586609640L)
-                .thenReturn(1586609940L);
+                .thenReturn(postTimestamp)
+                .thenReturn(CURRENT_TIME);
 
         socialNetworkClient.processUserInput("Alice -> I love the weather today");
         socialNetworkClient.processUserInput("Alice");
@@ -63,25 +58,47 @@ public class AcceptanceTests {
         verify(console).print("I love the weather today (5 minutes ago)\n");
     }
 
-
     @Test
     void read_other_users_timelines_with_multiple_posts() {
 
-        when(clock.now()).thenReturn(1586609640L)
-                .thenReturn(1586609820L)
-                .thenReturn(1586609880L)
-                .thenReturn(1586609940L);
+        long aliceTimestamp = CURRENT_TIME - 300;
+        long bobFirstPostTimestamp = CURRENT_TIME - 120;
+        long bobSecondPostTimestamp = CURRENT_TIME - 60;
+
+        when(clock.now()).thenReturn(aliceTimestamp)
+                .thenReturn(bobFirstPostTimestamp)
+                .thenReturn(bobSecondPostTimestamp)
+                .thenReturn(CURRENT_TIME);
 
         socialNetworkClient.processUserInput("Alice -> I love the weather today");
         socialNetworkClient.processUserInput("Bob -> Damn! We lost!");
         socialNetworkClient.processUserInput("Bob -> Good game though.");
-
         socialNetworkClient.processUserInput("Alice");
-        socialNetworkClient.processUserInput(("Bob"));
+        socialNetworkClient.processUserInput("Bob");
 
         verify(console).print("I love the weather today (5 minutes ago)\n");
-        verify(console).print(
-                        "Good game though. (1 minute ago)\n" +
+        verify(console).print("Good game though. (1 minute ago)\n" +
                         "Damn! We lost! (2 minutes ago)\n");
+    }
+
+//    > Charlie -> I'm in New York today! Anyone want to have a coffee?
+//    > Charlie follows Alice
+//    > Charlie wall
+//    Charlie - I'm in New York today! Anyone want to have a coffee? (2 seconds ago)
+//    Alice - I love the weather today (5 minutes ago)
+    @Test
+    void user_can_follow_other_user_and_see_followed_user_posts_on_user_wall() {
+        long aliceTimestamp = CURRENT_TIME - 300;
+        when(clock.now()).thenReturn(aliceTimestamp)
+                .thenReturn(CURRENT_TIME - 2)
+                .thenReturn(CURRENT_TIME);
+
+        socialNetworkClient.processUserInput("Alice -> I love the weather today");
+        socialNetworkClient.processUserInput("Charlie -> I'm in New York today! Anyone want to have a coffee?");
+        socialNetworkClient.processUserInput("Charlie follows Alice");
+        socialNetworkClient.processUserInput("Charlie wall");
+
+        verify(console).print("Charlie - I'm in New York today! Anyone want to have a coffee? (2 seconds ago)\n" +
+                "Alice - I love the weather today (5 minutes ago)");
     }
 }
