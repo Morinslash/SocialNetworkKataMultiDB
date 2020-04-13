@@ -40,4 +40,17 @@ class CommandFactoryShould {
 
         assertEquals(command.getClass(), ReadCommand.class);
     }
+
+    @Test
+    void return_follow_command_when_follows_input() {
+        String userInput = "Charlie follows " + USERNAME;
+        String[] parsedInput = {"Charlie", "follows", USERNAME};
+        CommandFactory commandFactory = new CommandFactory(parser, userService);
+
+        when(parser.parseInput(userInput)).thenReturn(parsedInput);
+
+        Command command = commandFactory.getCommand(userInput);
+
+        assertEquals(command.getClass(), FollowCommand.class);
+    }
 }

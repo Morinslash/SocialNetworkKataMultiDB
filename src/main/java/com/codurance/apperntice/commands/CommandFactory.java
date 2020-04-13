@@ -23,6 +23,9 @@ public class CommandFactory {
         if(parsedInput[1].equals("->")){
             return new PostCommand(user,parsedInput[2], userService);
         }
+        if(parsedInput[1].equals("follows")){
+            return new FollowCommand(user,parsedInput[2], userService);
+        }
         throw new UnsupportedOperationException("Implement me!");
     }
 }
