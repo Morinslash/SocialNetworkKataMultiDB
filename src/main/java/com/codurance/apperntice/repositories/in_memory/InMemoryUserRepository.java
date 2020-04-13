@@ -27,4 +27,9 @@ public class InMemoryUserRepository implements UserRepository {
         users.add(user);
         return user;
     }
+
+    @Override
+    public User getUserByName(String usernameToFollow) {
+        throw new UnsupportedOperationException("Implement me!");
+    }
 }

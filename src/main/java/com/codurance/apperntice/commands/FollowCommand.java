@@ -9,14 +9,16 @@ public class FollowCommand implements Command{
     private final String userToFollow;
     private final UserService userService;
 
-    public FollowCommand(User user, String userToFollow, UserService userService) {
+    public FollowCommand(User user, String usernameToFollow, UserService userService) {
         this.user = user;
-        this.userToFollow = userToFollow;
+        this.userToFollow = usernameToFollow;
         this.userService = userService;
     }
 
     @Override
     public void execute(UserRepository userRepository) {
-        throw new UnsupportedOperationException();
+        User user = userRepository.getUser(this.user);
+        User userToFollow = userRepository.getUserByName(this.userToFollow);
+        userService.follow(user, userToFollow);
     }
 }

@@ -26,4 +26,8 @@ public class UserService {
         List<Post> userPosts = postRepository.getUserPosts(user);
         printService.printPosts(userPosts, clock.now());
     }
+
+    public void follow(User anyUser, User userToFollow) {
+        throw new UnsupportedOperationException("implement me!");
+    }
 }
