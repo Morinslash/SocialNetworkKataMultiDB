@@ -29,6 +29,7 @@ public class InMemoryPostRepository implements PostRepository {
                 userPosts.add(post);
             }
         });
+        userPosts.sort((post1, post2) -> Long.compare(post2.timestamp, post1.timestamp));
         return Collections.unmodifiableList(userPosts);
     }
 

@@ -2,16 +2,13 @@ package com.codurance.apperntice.utils;
 
 import com.codurance.apperntice.entities.Post;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class PostFormatter {
 
     public String formatUserPosts(List<Post> posts, long currentTime) {
         StringBuilder formattedOutput = new StringBuilder();
-        ArrayList<Post> mutablePosts = reversePosts(posts);
-        mutablePosts.forEach(post -> {
+        posts.forEach(post -> {
             formattedOutput.append(formatReadUserPost(currentTime, post));
         });
         return formattedOutput.toString().trim();
@@ -30,12 +27,6 @@ public class PostFormatter {
                 post.user.username,
                 post.message,
                 formatTime(post.timestamp, currentTime));
-    }
-
-    private ArrayList<Post> reversePosts(List<Post> posts) {
-        ArrayList<Post> mutablePosts = new ArrayList<>(posts);
-        Collections.reverse(mutablePosts);
-        return mutablePosts;
     }
 
     private String formatReadUserPost(long currentTime, Post post) {

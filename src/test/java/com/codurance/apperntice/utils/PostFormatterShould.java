@@ -68,11 +68,12 @@ class PostFormatterShould {
 
     @Test
     void format_users_posts_lists_with_two_posts_in_desc_order() {
-        long firstPostTimestamp = 1234565L;
-        long secondPostTimestamp = 1234566L;
+        long firstPostTimestamp = CURRENT_TIME - 1;
+        long secondPostTimestamp = CURRENT_TIME -2;
         List<Post> postsList = List.of(
                 new Post(anyUser, POST_MESSAGE, firstPostTimestamp),
-                new Post(anyUser, POST_MESSAGE, secondPostTimestamp));
+                new Post(anyUser, POST_MESSAGE, secondPostTimestamp)
+    );
 
         String formattedOutput = postFormatter.formatUserPosts(postsList, CURRENT_TIME);
 
