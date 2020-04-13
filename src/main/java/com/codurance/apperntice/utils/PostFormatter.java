@@ -5,14 +5,19 @@ import com.codurance.apperntice.entities.Post;
 import java.util.List;
 
 public class PostFormatter {
+
     public String formatUserPosts(List<Post> posts, long currentTime) {
         StringBuilder formattedOutput = new StringBuilder();
         posts.forEach(post -> {
-            String timeAgo = formatTime(post.timestamp, currentTime);
-            String formattedPost = String.format("%s (%s)", post.message, timeAgo);
-            formattedOutput.append(formattedPost);
+            formattedOutput.append(formatReadUserPosts(currentTime, post));
         });
         return formattedOutput.toString();
+    }
+
+    private String formatReadUserPosts(long currentTime, Post post) {
+        return String.format("%s (%s)",
+                post.message,
+                formatTime(post.timestamp, currentTime));
     }
 
     private String formatTime(long timestamp, long currentTime) {
