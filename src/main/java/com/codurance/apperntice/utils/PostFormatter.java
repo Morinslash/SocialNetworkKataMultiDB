@@ -16,7 +16,6 @@ public class PostFormatter {
         });
         return formattedOutput.toString();
     }
-//TODO put sorting list into repository implementation!
     private ArrayList<Post> reversePosts(List<Post> posts) {
         ArrayList<Post> mutablePosts = new ArrayList<>(posts);
         Collections.reverse(mutablePosts);

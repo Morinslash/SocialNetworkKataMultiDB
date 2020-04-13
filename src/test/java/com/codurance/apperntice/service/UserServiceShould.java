@@ -51,7 +51,7 @@ class UserServiceShould {
         List<Post> posts = List.of(post);
 
         when(clock.now()).thenReturn(TIMESTAMP);
-        when(postRepository.getUserPosts(anyUser)).thenReturn(posts);
+        when(postRepository.getUserPostsFromNewest(anyUser)).thenReturn(posts);
         userService.printPosts(anyUser);
 
         verify(printService).printPosts(posts, clock.now());

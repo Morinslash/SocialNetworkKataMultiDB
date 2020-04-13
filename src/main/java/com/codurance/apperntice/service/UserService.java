@@ -26,7 +26,7 @@ public class UserService {
     }
 
     public void printPosts(User user) {
-        List<Post> userPosts = postRepository.getUserPosts(user);
+        List<Post> userPosts = postRepository.getUserPostsFromNewest(user);
         printService.printPosts(userPosts, clock.now());
     }
 

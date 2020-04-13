@@ -26,7 +26,7 @@ class InMemoryPostRepositoryShould {
         User anyUser = new User(USERNAME);
         repository.storePost(anyUser, MESSAGE, TIMESTAMP);
 
-        assertEquals(1, repository.getUserPosts(anyUser).size());
+        assertEquals(1, repository.getUserPostsFromNewest(anyUser).size());
     }
 
     @Test

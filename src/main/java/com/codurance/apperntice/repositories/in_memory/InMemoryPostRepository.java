@@ -22,7 +22,7 @@ public class InMemoryPostRepository implements PostRepository {
     }
 
     @Override
-    public List<Post> getUserPosts(User user) {
+    public List<Post> getUserPostsFromNewest(User user) {
         List<Post> userPosts = new ArrayList<>();
         posts.forEach(post ->  {
             if (post.user.equals(user)){
@@ -36,9 +36,9 @@ public class InMemoryPostRepository implements PostRepository {
     public List<Post> getUsersPostsFromNewest(List<User> users) {
         List<Post> usersPosts = new ArrayList<Post>();
         users.forEach(user ->{
-            usersPosts.addAll(getUserPosts(user));
+            usersPosts.addAll(getUserPostsFromNewest(user));
         });
         usersPosts.sort((post1, post2) -> Long.compare(post2.timestamp, post1.timestamp));
-        return usersPosts;
+        return Collections.unmodifiableList(usersPosts);
     }
 }
