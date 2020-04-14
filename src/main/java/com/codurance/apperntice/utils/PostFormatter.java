@@ -9,7 +9,7 @@ public class PostFormatter {
     public String formatUserPosts(List<Post> posts, long currentTime) {
         StringBuilder formattedOutput = new StringBuilder();
         posts.forEach(post -> {
-            formattedOutput.append(formatReadUserPost(currentTime, post));
+            formattedOutput.append(formatUserReadPost(currentTime, post));
         });
         return formattedOutput.toString().trim();
     }
@@ -17,24 +17,24 @@ public class PostFormatter {
     public String formatWallPosts(List<Post> usersPosts, long currentTime) {
         StringBuilder formattedOutput = new StringBuilder();
         usersPosts.forEach(post -> {
-            formattedOutput.append(formatUserWallPosts(currentTime, post));
+            formattedOutput.append(formatUserWallPost(currentTime, post));
         });
         return formattedOutput.toString().trim();
     }
 
-    private String formatUserWallPosts(long currentTime, Post post) {
+    private String formatUserWallPost(long currentTime, Post post) {
         return String.format("%s - %s (%s)\n",
                 post.user.username,
                 post.message,
                 formatTime(post.timestamp, currentTime));
     }
 
-    private String formatReadUserPost(long currentTime, Post post) {
+    private String formatUserReadPost(long currentTime, Post post) {
         return String.format("%s (%s)\n",
                 post.message,
                 formatTime(post.timestamp, currentTime));
     }
-
+//TODO think about splitting this to separate service
     private String formatTime(long timestamp, long currentTime) {
         long timeAgo = currentTime - timestamp;
         return getTimeUnit(timeAgo);

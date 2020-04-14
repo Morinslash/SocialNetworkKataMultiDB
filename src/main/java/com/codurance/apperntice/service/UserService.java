@@ -8,6 +8,7 @@ import com.codurance.apperntice.utils.Clock;
 
 import java.util.List;
 
+//TODO this class is doing too much, think about extracting
 public class UserService {
     private Clock clock;
     private PostRepository postRepository;

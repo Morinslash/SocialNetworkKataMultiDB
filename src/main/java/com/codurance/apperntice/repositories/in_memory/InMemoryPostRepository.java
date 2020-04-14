@@ -24,6 +24,7 @@ public class InMemoryPostRepository implements PostRepository {
     @Override
     public List<Post> getUserPostsFromNewest(User user) {
         List<Post> userPosts = new ArrayList<>();
+//            TODO look into using better lambda
         posts.forEach(post ->  {
             if (post.user.equals(user)){
                 userPosts.add(post);
@@ -36,6 +37,7 @@ public class InMemoryPostRepository implements PostRepository {
     @Override
     public List<Post> getUsersPostsFromNewest(List<User> users) {
         List<Post> usersPosts = new ArrayList<Post>();
+//        TODO same, check better lambda usage here
         users.forEach(user ->{
             usersPosts.addAll(getUserPostsFromNewest(user));
         });

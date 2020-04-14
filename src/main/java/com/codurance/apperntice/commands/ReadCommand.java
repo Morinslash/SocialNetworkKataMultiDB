@@ -5,8 +5,8 @@ import com.codurance.apperntice.repositories.UserRepository;
 import com.codurance.apperntice.service.UserService;
 
 public class ReadCommand implements Command {
-    private User user;
-    private UserService userService;
+    private final User user;
+    private final UserService userService;
 
     public ReadCommand(User user, UserService userService) {
         this.user = user;

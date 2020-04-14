@@ -7,7 +7,7 @@ import com.codurance.apperntice.service.UserService;
 public class PostCommand implements Command{
     private final User user;
     private final String message;
-    private UserService userService;
+    private final UserService userService;
 
     public PostCommand(User user, String message, UserService userService) {
         this.user = user;
