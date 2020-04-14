@@ -20,19 +20,19 @@ public class CommandFactory {
         String[] parsedInput = parser.parseInput(userInput);
         User user = new User(parsedInput[0]);
 //TODO think about other solution for parsedInput
-        if(parsedInput[1] == null){
+        if (parsedInput[1] == null) {
             return new ReadCommand(user, userService);
         }
-        if(parsedInput[1].equals(POST_COMMAND)){
-            return new PostCommand(user,parsedInput[2], userService);
+        if (parsedInput[1].equals(POST_COMMAND)) {
+            return new PostCommand(user, parsedInput[2], userService);
         }
-        if(parsedInput[1].equals(FOLLOW_COMMAND)){
-            return new FollowCommand(user,parsedInput[2], userService);
+        if (parsedInput[1].equals(FOLLOW_COMMAND)) {
+            return new FollowCommand(user, parsedInput[2], userService);
         }
-        if(parsedInput[1].equals(WALL_COMMAND)){
+        if (parsedInput[1].equals(WALL_COMMAND)) {
             return new WallCommand(user, userService);
         }
 
-        throw new UnsupportedOperationException("Implement me!");
+        throw new UnsupportedOperationException("Unknown command");
     }
 }
