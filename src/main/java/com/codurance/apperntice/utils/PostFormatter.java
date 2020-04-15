@@ -26,17 +26,17 @@ public class PostFormatter {
         return String.format("%s - %s (%s)\n",
                 post.user.username,
                 post.message,
-                formatTime(post.timestamp, currentTime));
+                formatTimeInSeconds(post.timestamp, currentTime));
     }
 
     private String formatUserReadPost(long currentTime, Post post) {
         return String.format("%s (%s)\n",
                 post.message,
-                formatTime(post.timestamp, currentTime));
+                formatTimeInSeconds(post.timestamp, currentTime));
     }
 //TODO think about splitting this to separate service
-    private String formatTime(long timestamp, long currentTime) {
-        long timeAgo = currentTime - timestamp;
+    private String formatTimeInSeconds(long timestamp, long currentTime) {
+        long timeAgo = (currentTime - timestamp) / 1000;
         return getTimeUnit(timeAgo);
     }
 
