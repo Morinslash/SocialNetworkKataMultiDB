@@ -15,7 +15,7 @@ public class UserService {
     private PrintService printService;
     private FollowRepository followRepository;
 
-    public UserService(Clock clock, PostRepository postRepository, PrintService printService, FollowRepository followRepository) {
+    public UserService(Clock clock, PrintService printService, PostRepository postRepository, FollowRepository followRepository) {
         this.clock = clock;
         this.postRepository = postRepository;
         this.printService = printService;
@@ -37,7 +37,6 @@ public class UserService {
 
     public void printWall(User user) {
         List<User> usersList = followRepository.getFollowed(user);
-        usersList.add(user);
         List<Post> usersPosts = postRepository.getUsersPostsFromNewest(usersList);
         printService.printWall(usersPosts, clock.now());
     }

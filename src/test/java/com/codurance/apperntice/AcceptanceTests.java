@@ -43,7 +43,7 @@ public class AcceptanceTests {
         InMemoryFollowRepository followRepository = new InMemoryFollowRepository();
 
         PrintService printService = new PrintService(formatter, console);
-        UserService userService = new UserService(clock, postRepository, printService, followRepository);
+        UserService userService = new UserService(clock, printService, postRepository, followRepository);
         SocialService socialService = new SocialService(userRepository);
 
         CommandFactory commandFactory = new CommandFactory(parser, userService);
@@ -53,7 +53,7 @@ public class AcceptanceTests {
 
     @Test
     public void when_user_post_new_post_user_has_new_post() {
-        long postTimestamp = CURRENT_TIME - 300;
+        long postTimestamp = CURRENT_TIME - 300000;
 
         when(clock.now())
                 .thenReturn(postTimestamp)
@@ -68,9 +68,9 @@ public class AcceptanceTests {
     @Test
     void read_other_users_timelines_with_multiple_posts() {
 
-        long aliceTimestamp = CURRENT_TIME - 300;
-        long bobFirstPostTimestamp = CURRENT_TIME - 120;
-        long bobSecondPostTimestamp = CURRENT_TIME - 60;
+        long aliceTimestamp = CURRENT_TIME - 300000;
+        long bobFirstPostTimestamp = CURRENT_TIME - 120000;
+        long bobSecondPostTimestamp = CURRENT_TIME - 60000;
 
         when(clock.now()).thenReturn(aliceTimestamp)
                 .thenReturn(bobFirstPostTimestamp)
@@ -90,9 +90,9 @@ public class AcceptanceTests {
 
     @Test
     void user_can_follow_other_user_and_see_followed_user_posts_on_user_wall() {
-        long aliceTimestamp = CURRENT_TIME - 300;
+        long aliceTimestamp = CURRENT_TIME - 300000;
         when(clock.now()).thenReturn(aliceTimestamp)
-                .thenReturn(CURRENT_TIME - 2)
+                .thenReturn(CURRENT_TIME - 2000)
                 .thenReturn(CURRENT_TIME);
 
         socialNetworkClient.processUserInput("Alice -> I love the weather today");

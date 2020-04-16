@@ -20,10 +20,10 @@ public class InMemoryFollowRepository implements FollowRepository {
         usersFollows.get(user).add(userToFollow);
     }
 
-//TODO Think about kicking in merging user to follow list here from user service
     @Override
     public List<User> getFollowed(User user) {
-        ArrayList<User> usersFollowsList = new ArrayList<>(usersFollows.get(user));
-        return usersFollowsList;
+        ArrayList<User> wallUsers = new ArrayList<>(List.of(user));
+        wallUsers.addAll(usersFollows.get(user));
+        return wallUsers;
     }
 }

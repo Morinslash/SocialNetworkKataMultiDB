@@ -34,7 +34,7 @@ class UserServiceShould {
 
     @BeforeEach
     void setUp() {
-        userService = new UserService(clock, postRepository, printService, followRepository);
+        userService = new UserService(clock, printService, postRepository, followRepository);
     }
 
     @Test

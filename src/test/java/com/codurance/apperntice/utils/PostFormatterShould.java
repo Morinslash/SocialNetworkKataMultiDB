@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ExtendWith(MockitoExtension.class)
 class PostFormatterShould {
 
-    public static final long CURRENT_TIME = 1234567L;
+    public static final long CURRENT_TIME = 1580551200L;
     public static final String POST_MESSAGE = "Hello!";
     @Mock
     private User anyUser;
@@ -28,7 +28,7 @@ class PostFormatterShould {
 
     @Test
     void format_user_posts_list_with_one_post_1_second_ago() {
-        long postTimestamp = 1234566L;
+        long postTimestamp = CURRENT_TIME - 1000;
         Post post = new Post(anyUser, POST_MESSAGE, postTimestamp);
 
         String formattedOutput = postFormatter.formatUserPosts(List.of(post), CURRENT_TIME);
@@ -38,7 +38,7 @@ class PostFormatterShould {
 
     @Test
     void format_user_posts_list_with_one_post_2_seconds_ago() {
-        long postTimestamp = 1234565L;
+        long postTimestamp = CURRENT_TIME - 2000;
         Post post = new Post(anyUser, POST_MESSAGE, postTimestamp);
 
         String formattedOutput = postFormatter.formatUserPosts(List.of(post), CURRENT_TIME);
@@ -48,7 +48,7 @@ class PostFormatterShould {
 
     @Test
     void format_user_posts_list_with_one_post_1_minute_ago() {
-        long postTimestamp = 1234507L;
+        long postTimestamp = CURRENT_TIME - 60000;
         Post post = new Post(anyUser, POST_MESSAGE, postTimestamp);
 
         String formattedOutput = postFormatter.formatUserPosts(List.of(post), CURRENT_TIME);
@@ -58,7 +58,7 @@ class PostFormatterShould {
 
     @Test
     void format_user_posts_list_with_one_post_over_2_minutes_ago() {
-        long postTimestamp = 1234443L;
+        long postTimestamp = CURRENT_TIME - 120000;
         Post post = new Post(anyUser, POST_MESSAGE, postTimestamp);
 
         String formattedOutput = postFormatter.formatUserPosts(List.of(post), CURRENT_TIME);
@@ -68,8 +68,8 @@ class PostFormatterShould {
 
     @Test
     void format_users_posts_lists_with_two_posts_in_desc_order() {
-        long firstPostTimestamp = CURRENT_TIME - 1;
-        long secondPostTimestamp = CURRENT_TIME -2;
+        long firstPostTimestamp = CURRENT_TIME - 1000;
+        long secondPostTimestamp = CURRENT_TIME - 2000;
         List<Post> postsList = List.of(
                 new Post(anyUser, POST_MESSAGE, firstPostTimestamp),
                 new Post(anyUser, POST_MESSAGE, secondPostTimestamp)
@@ -85,8 +85,8 @@ class PostFormatterShould {
 
     @Test
     void format_users_posts_for_wall_format() {
-        long firstUserPostTimestamp = CURRENT_TIME - 1;
-        long secondUserPostTimestamp = CURRENT_TIME - 4;
+        long firstUserPostTimestamp = CURRENT_TIME - 1000;
+        long secondUserPostTimestamp = CURRENT_TIME - 4000;
 
         List<Post> postsList = List.of(
                 new Post(new User("Alice"), POST_MESSAGE, firstUserPostTimestamp),

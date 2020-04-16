@@ -26,6 +26,7 @@ public class App {
     public static void main(String[] args) {
 
         SocialNetworkClient socialNetworkClient = buildClient();
+//        TODO print instructions before starting main loop
         while(true){
             socialNetworkClient.processUserInput(console.getUserInput());
         }
@@ -37,7 +38,7 @@ public class App {
         PostRepository postRepository = new InMemoryPostRepository();
 
         PrintService printService = new PrintService(formatter, console);
-        UserService userService = new UserService(clock, postRepository, printService, followRepository);
+        UserService userService = new UserService(clock, printService, postRepository, followRepository);
         SocialService socialService = new SocialService(userRepository);
 
         CommandFactory commandFactory = new CommandFactory(parser, userService);
