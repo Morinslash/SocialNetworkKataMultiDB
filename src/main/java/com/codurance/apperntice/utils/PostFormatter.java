@@ -6,6 +6,12 @@ import java.util.List;
 
 public class PostFormatter {
 
+    private final TimestampToHuman timestampToHuman;
+
+    public PostFormatter() {
+        timestampToHuman = new TimestampToHuman();
+    }
+
     public String formatUserPosts(List<Post> posts, long currentTime) {
         StringBuilder formattedOutput = new StringBuilder();
         posts.forEach(post -> {
@@ -26,30 +32,13 @@ public class PostFormatter {
         return String.format("%s - %s (%s)\n",
                 post.user.username,
                 post.message,
-                formatTimeInSeconds(post.timestamp, currentTime));
+                timestampToHuman.format(post.timestamp, currentTime));
     }
 
     private String formatUserReadPost(long currentTime, Post post) {
         return String.format("%s (%s)\n",
                 post.message,
-                formatTimeInSeconds(post.timestamp, currentTime));
-    }
-//TODO think about splitting this to separate service
-    private String formatTimeInSeconds(long timestamp, long currentTime) {
-        long timeAgo = (currentTime - timestamp) / 1000;
-        return getTimeUnit(timeAgo);
-    }
-
-    private String getTimeUnit(long timeAgo) {
-        if (timeAgo == 1) {
-            return timeAgo + " second ago";
-        }
-        if (timeAgo < 60) {
-            return timeAgo + " seconds ago";
-        }
-        if (timeAgo < 120) {
-            return timeAgo / 60 + " minute ago";
-        }
-        return timeAgo / 60 + " minutes ago";
+                timestampToHuman.format(post.timestamp, currentTime));
     }
 }
+

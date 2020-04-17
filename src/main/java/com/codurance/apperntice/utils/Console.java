@@ -2,7 +2,6 @@ package com.codurance.apperntice.utils;
 
 import java.util.Scanner;
 
-//TODO finish console class to build app!
 public class Console {
 
     private Scanner scanner = new Scanner(System.in);
