@@ -6,9 +6,13 @@ import com.codurance.apperntice.repositories.PostRepository;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class InMemoryPostRepository implements PostRepository {
+    private final Comparator<Post> compareByTimestamp = (post1, post2) -> Long.compare(post2.timestamp, post1.timestamp);
     private List<Post> posts;
 
     public InMemoryPostRepository() {
@@ -23,25 +27,19 @@ public class InMemoryPostRepository implements PostRepository {
 
     @Override
     public List<Post> getUserPostsFromNewest(User user) {
-        List<Post> userPosts = new ArrayList<>();
-//            TODO look into using better lambda
-        posts.forEach(post ->  {
-            if (post.user.equals(user)){
-                userPosts.add(post);
-            }
-        });
-        userPosts.sort((post1, post2) -> Long.compare(post2.timestamp, post1.timestamp));
-        return Collections.unmodifiableList(userPosts);
+        Predicate<Post> byUser = post -> post.user.equals(user);
+        return posts.stream()
+                .filter(byUser)
+                .sorted(compareByTimestamp)
+                .collect(Collectors.toUnmodifiableList());
     }
+
 
     @Override
     public List<Post> getUsersPostsFromNewest(List<User> users) {
         List<Post> usersPosts = new ArrayList<Post>();
-//        TODO same, check better lambda usage here
-        users.forEach(user ->{
-            usersPosts.addAll(getUserPostsFromNewest(user));
-        });
-        usersPosts.sort((post1, post2) -> Long.compare(post2.timestamp, post1.timestamp));
+        users.forEach(user -> usersPosts.addAll(getUserPostsFromNewest(user)));
+        usersPosts.sort(compareByTimestamp);
         return Collections.unmodifiableList(usersPosts);
     }
 }
