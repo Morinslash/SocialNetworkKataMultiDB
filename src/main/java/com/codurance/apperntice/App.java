@@ -26,10 +26,22 @@ public class App {
     public static void main(String[] args) {
 
         SocialNetworkClient socialNetworkClient = buildClient();
-//        TODO print instructions before starting main loop
+        console.print(instructions());
         while(true){
             socialNetworkClient.processUserInput(console.getUserInput());
         }
+    }
+
+    private static String instructions() {
+        return "To post a new message:\n"+
+                "<username> -> <post message>\n" +
+                "To read user timeline:\n"+
+                "<username>\n" +
+                "To follow a user:\n"+
+                "<username> follows <username to follow>\n" +
+                "To see user wall:\n"+
+                "<username> wall\n";
+
     }
 
     private static SocialNetworkClient buildClient(){
